@@ -1,0 +1,7 @@
+<resources>
+	<string name="app_name">testProject</string>
+	<string name="move_up">Move Up</string>
+	<string name="move_down">Move Down</string>
+	<string name="remove">Remove</string>
+	<string name="element_info">Test Element</string>
+</resources>
