@@ -2,11 +2,15 @@ package com.example.testproject.models
 
 import android.graphics.Color
 import com.github.javafaker.Faker
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
 typealias ElementsListener = (elements: List<Element>) -> Unit
 
 class ElementService {
+
+	val elementsInitStream: PublishSubject<ArrayList<Element>> = PublishSubject.create()
 
 	private var elements = mutableListOf<Element>()
 
@@ -15,14 +19,20 @@ class ElementService {
 	private val faker = Faker.instance()
 
 	init {
-
-		elements = (1..100).map {
+		elements = (1..5).map {
 			Element(
 				id = it.toLong(),
 				name = faker.name().name(),
 				color = Color.parseColor(faker.color().hex())
 			)
 		}.toMutableList()
+
+		elementsInitStream
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe() { it ->
+				elements = it
+				notifyChanges()
+			}
 	}
 
 	fun getElements(): List<Element> {

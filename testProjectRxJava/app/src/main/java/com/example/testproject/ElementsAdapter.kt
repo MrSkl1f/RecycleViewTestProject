@@ -70,3 +70,28 @@ class ElementsAdapter(private val elements: MutableList<Element>) : RecyclerView
 		}
 	}
 }
+
+
+
+class ListNode(var `val`: Int) {
+	var next: ListNode? = null
+}
+
+
+class Solution {
+	fun isPalindrome(head: ListNode?): Boolean {
+		val lst: MutableList<Int> = mutableListOf()
+		var currentNode: ListNode? = head
+		while (currentNode != null) {
+			lst.add(currentNode.`val`)
+			currentNode = currentNode.next
+		}
+		val lstSize = lst.size
+		for (i in 0..(lstSize / 2)) {
+			if (lst[i] != lst[lstSize - i - 1]) {
+				return false
+			}
+		}
+		return true
+	}
+}
